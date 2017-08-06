@@ -1,2 +1,3 @@
 language: scala
-dist: precise
+scala:
+   - 2.12.2

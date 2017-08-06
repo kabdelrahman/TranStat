@@ -3,7 +3,7 @@ name := "transtat"
 
 version := "1.0"
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.12.2"
 
 val akkaVersion = "2.4.19"
 val akkaHttpVersion = "10.0.9"
