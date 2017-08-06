@@ -1,2 +1,7 @@
 *.class
 *.log
+.idea/
+TransStat.git.iml
+target/**
+project/project/**
+project/target/**
