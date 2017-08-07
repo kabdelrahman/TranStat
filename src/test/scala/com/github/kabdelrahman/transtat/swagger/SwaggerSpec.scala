@@ -2,13 +2,11 @@ package com.github.kabdelrahman.transtat.swagger
 
 import akka.http.scaladsl.model.{HttpMethods, HttpRequest}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import com.github.kabdelrahman.transtat.api.{Api, Core, CoreActors}
-import com.github.kabdelrahman.transtat.metrics.{AppWideMetrics, Metrics}
+import com.github.kabdelrahman.transtat.Spec
 import org.scalatest.{Matchers, WordSpec}
 
-class SwaggerSpec extends WordSpec with Matchers with ScalatestRouteTest with Api with Core with CoreActors {
+class SwaggerSpec extends WordSpec with Matchers with ScalatestRouteTest with Spec {
 
-  override implicit val metrics: Metrics = AppWideMetrics
   "Swagger Endpoint" should {
     "returns valid API documentation" in {
       val request = HttpRequest(

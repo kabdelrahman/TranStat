@@ -8,11 +8,6 @@ trait Core {
 }
 
 trait CoreActorSystem extends Core {
-  override lazy val system = ActorSystem("main-transtat-actor-system")
+  override val system = ActorSystem("main-transtat-actor-system")
   sys.addShutdownHook(system.terminate())
-}
-
-trait CoreActors {
-  this: Core =>
-  val transactionActor: ActorRef = system.actorOf(TransactionActor())
 }

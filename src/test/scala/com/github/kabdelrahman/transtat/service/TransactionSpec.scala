@@ -3,19 +3,16 @@ package com.github.kabdelrahman.transtat.service
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.util.ByteString
-import com.github.kabdelrahman.transtat.api.{Api, Core, CoreActors}
-import com.github.kabdelrahman.transtat.metrics.{AppWideMetrics, Metrics}
+import com.github.kabdelrahman.transtat.Spec
 import org.scalatest.{Matchers, WordSpec}
 
 import scala.util.Random
 
-class TransactionServiceSpec extends WordSpec with Matchers with ScalatestRouteTest with Api with Core with CoreActors {
 
-  override implicit val metrics: Metrics = AppWideMetrics
-
+class TransactionSpec extends WordSpec with Matchers with ScalatestRouteTest with Spec {
 
   "Transactions Endpoint" should {
-    "return `200` if transaction added successfully" ignore {
+    "return `200` if transaction added successfully" in {
       val now = System.currentTimeMillis()
       val jsonRequest = ByteString(
         s"""
@@ -33,7 +30,7 @@ class TransactionServiceSpec extends WordSpec with Matchers with ScalatestRouteT
         response.status shouldEqual StatusCodes.OK
       }
     }
-    "still return `200` if transaction time is done within the last 60 seconds" ignore {
+    "still return `200` if transaction time is done within the last 60 seconds" in {
       val now = System.currentTimeMillis() - Random.nextInt(60000)
       val jsonRequest = ByteString(
         s"""
@@ -50,7 +47,7 @@ class TransactionServiceSpec extends WordSpec with Matchers with ScalatestRouteT
         response.status shouldEqual StatusCodes.OK
       }
     }
-    "return `204` if transaction time is older than 60 seconds" ignore {
+    "return `204` if transaction time is older than 60 seconds" in {
       val now = System.currentTimeMillis() - 60010
       val jsonRequest = ByteString(
         s"""
