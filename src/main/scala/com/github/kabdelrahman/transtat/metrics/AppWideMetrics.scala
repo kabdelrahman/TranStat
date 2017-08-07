@@ -8,7 +8,7 @@ import nl.grons.metrics.scala._
 class Metrics(val metricRegistry: MetricRegistry) extends InstrumentedBuilder {
   override lazy val metricBaseName = MetricName("transtat.response")
   val transactionMetrics: Timer = metrics.timer("transaction-post-response")
-  println("transactionMetrics " + transactionMetrics)
+  val statsMetrics: Timer = metrics.timer("stats-get-response")
 }
 
 object AppWideMetrics extends Metrics(new com.codahale.metrics.MetricRegistry())

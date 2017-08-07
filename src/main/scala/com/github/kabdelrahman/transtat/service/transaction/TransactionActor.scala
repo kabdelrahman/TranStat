@@ -4,6 +4,7 @@ import akka.actor.{Actor, ActorLogging, Props}
 import akka.event.LoggingReceive
 import com.github.kabdelrahman.transtat.bootstrap.AppConfig
 import com.github.kabdelrahman.transtat.model.Transaction
+import com.github.kabdelrahman.transtat.service.Cache
 
 import scala.concurrent.ExecutionContext.Implicits.global
 

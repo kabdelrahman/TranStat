@@ -12,11 +12,12 @@ import com.github.kabdelrahman.transtat.codecs.DefaultJsonFormats
 import com.github.kabdelrahman.transtat.metrics.Metrics
 import com.github.kabdelrahman.transtat.metrics.TimerSupport._
 import com.github.kabdelrahman.transtat.model.Transaction
+import com.github.kabdelrahman.transtat.service.Cache
 import io.swagger.annotations.{Api, ApiOperation, ApiResponse, ApiResponses}
 import spray.json.RootJsonFormat
-import scala.concurrent.duration._
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
 
 
 @Api(
@@ -27,7 +28,8 @@ import scala.concurrent.ExecutionContext
 @Path("/transactions")
 class TransactionService()(implicit executionContext: ExecutionContext,
                            implicit val metrics: Metrics,
-                           implicit val system: ActorSystem)
+                           implicit val system: ActorSystem,
+                           implicit val cache: Cache[Transaction])
   extends Directives with DefaultJsonFormats with AppConfig {
 
   // That's a very high timeout that should be monitored by metrics and reduced overtime.
@@ -36,8 +38,6 @@ class TransactionService()(implicit executionContext: ExecutionContext,
   implicit val transactionModelFormat: RootJsonFormat[Transaction] = jsonFormat2(Transaction)
 
   val route: Route = postTransaction
-
-  val cache = TransactionInMemoryCache
 
   @ApiOperation(
     value =
