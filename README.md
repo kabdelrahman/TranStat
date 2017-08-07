@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kabdelrahman/TranStat.svg?branch=master)](https://travis-ci.org/kabdelrahman/TranStat)
+
 # TranStat
 
 Receive transactions from one side and provide statistics on it from the other side.
