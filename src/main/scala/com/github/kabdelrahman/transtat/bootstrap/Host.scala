@@ -1,6 +1,5 @@
 package com.github.kabdelrahman.transtat.bootstrap
 
-import akka.actor.ActorLogging
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.github.kabdelrahman.transtat.api.{Api, Core, CoreActors}
