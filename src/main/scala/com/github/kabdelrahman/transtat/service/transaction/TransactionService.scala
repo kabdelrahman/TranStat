@@ -6,8 +6,8 @@ import akka.actor.ActorRef
 import akka.http.scaladsl.server.{Directives, Route}
 import akka.pattern._
 import akka.util.Timeout
-import com.github.kabdelrahman.transtat.Metrics.Metrics
-import com.github.kabdelrahman.transtat.Metrics.TimerSupport._
+import com.github.kabdelrahman.transtat.metrics.Metrics
+import com.github.kabdelrahman.transtat.metrics.TimerSupport._
 import com.github.kabdelrahman.transtat.codecs.DefaultJsonFormats
 import com.github.kabdelrahman.transtat.model.Transaction
 import io.swagger.annotations.{Api, ApiOperation, ApiResponse, ApiResponses}

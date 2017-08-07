@@ -1,7 +1,7 @@
 package com.github.kabdelrahman.transtat.api
 
 import akka.http.scaladsl.server.{Route, RouteConcatenation}
-import com.github.kabdelrahman.transtat.Metrics.Metrics
+import com.github.kabdelrahman.transtat.metrics.Metrics
 import com.github.kabdelrahman.transtat.service.transaction.TransactionService
 import com.github.kabdelrahman.transtat.swagger.SwaggerDocumentationService
 

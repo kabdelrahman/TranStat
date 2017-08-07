@@ -1,4 +1,4 @@
-package com.github.kabdelrahman.transtat.Metrics
+package com.github.kabdelrahman.transtat.metrics
 
 
 import akka.http.scaladsl.server.{RequestContext, _}
