@@ -6,7 +6,6 @@ import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.server.{Directives, Route}
 import akka.pattern._
 import akka.util.Timeout
-import com.github.kabdelrahman.transtat.bootstrap.AppConfig
 import com.github.kabdelrahman.transtat.codecs.DefaultJsonFormats
 import com.github.kabdelrahman.transtat.metrics.Metrics
 import com.github.kabdelrahman.transtat.metrics.TimerSupport._
@@ -30,7 +29,7 @@ class StatService()(implicit executionContext: ExecutionContext,
                     implicit val system: ActorSystem,
                     implicit val cacheController: ActorRef
 )
-  extends Directives with DefaultJsonFormats with AppConfig {
+  extends Directives with DefaultJsonFormats {
 
   // That's a very high timeout that should be monitored by metrics and reduced overtime.
   implicit val timeout = Timeout(2.seconds)

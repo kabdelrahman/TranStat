@@ -8,7 +8,6 @@ object Main
   extends App
     with LazyLogging
     with HealthEndpoint // TODO enable Metrics for HealthCheck
-    with AppConfig
     with CoreActorSystem
     with Api
     with Host

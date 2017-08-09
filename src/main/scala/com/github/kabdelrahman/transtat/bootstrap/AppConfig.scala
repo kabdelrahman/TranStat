@@ -6,7 +6,7 @@ import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.concurrent.duration.{Duration, FiniteDuration}
 
-trait AppConfig {
+object AppConfig {
   val config: Config = ConfigFactory.load()
   val httpHost: String = config.getString("http.host")
   val httpPort: Int = config.getInt("http.port")

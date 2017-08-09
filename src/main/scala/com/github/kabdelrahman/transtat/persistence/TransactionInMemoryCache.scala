@@ -1,11 +1,11 @@
 package com.github.kabdelrahman.transtat.persistence
 
-import com.github.kabdelrahman.transtat.bootstrap.AppConfig
+import com.github.kabdelrahman.transtat.bootstrap.AppConfig._
 import com.github.kabdelrahman.transtat.model.Transaction
 
 import scala.collection.concurrent.TrieMap
 
-class TransactionInMemoryCache extends Cache[Transaction] with AppConfig {
+class TransactionInMemoryCache extends Cache[Transaction] {
 
   // Initialize expected cache size
   data.sizeHint(cacheTtl.toMillis.toInt)

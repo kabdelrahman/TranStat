@@ -2,7 +2,7 @@ package com.github.kabdelrahman.transtat.service.transaction
 
 import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import akka.event.LoggingReceive
-import com.github.kabdelrahman.transtat.bootstrap.AppConfig
+import com.github.kabdelrahman.transtat.bootstrap.AppConfig._
 import com.github.kabdelrahman.transtat.model.Transaction
 import com.github.kabdelrahman.transtat.persistence.CacheRequest
 
@@ -13,7 +13,7 @@ object TransactionActor {
   def apply(cacheController: ActorRef): Props = Props(new TransactionActor(cacheController))
 }
 
-class TransactionActor(cacheController: ActorRef) extends Actor with ActorLogging with AppConfig {
+class TransactionActor(cacheController: ActorRef) extends Actor with ActorLogging {
 
   def receive: Receive = LoggingReceive {
     case trx: Transaction =>

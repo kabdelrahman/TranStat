@@ -1,7 +1,5 @@
 package com.github.kabdelrahman.transtat.persistence
 
-import com.github.kabdelrahman.transtat.bootstrap.AppConfig
-
 import scala.collection.concurrent.TrieMap
 
 

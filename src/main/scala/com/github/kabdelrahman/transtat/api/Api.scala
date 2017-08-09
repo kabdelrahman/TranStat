@@ -2,7 +2,7 @@ package com.github.kabdelrahman.transtat.api
 
 import akka.actor.ActorRef
 import akka.http.scaladsl.server.{Route, RouteConcatenation}
-import com.github.kabdelrahman.transtat.bootstrap.AppConfig
+import com.github.kabdelrahman.transtat.bootstrap.AppConfig._
 import com.github.kabdelrahman.transtat.metrics.AppWideMetrics
 import com.github.kabdelrahman.transtat.persistence.{CacheController, ResetTickWheel, Tick}
 import com.github.kabdelrahman.transtat.service.stats.StatService
@@ -12,7 +12,7 @@ import com.github.kabdelrahman.transtat.swagger.SwaggerDocumentationService
 import scala.concurrent.duration._
 
 trait Api extends RouteConcatenation {
-  this: Core with AppConfig =>
+  this: Core =>
 
   private implicit val _ = system.dispatcher
 
