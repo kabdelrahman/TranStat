@@ -1,13 +1,14 @@
 package com.github.kabdelrahman.transtat.swagger
 
 import com.github.kabdelrahman.transtat.bootstrap.AppConfig
+import com.github.kabdelrahman.transtat.service.stats.StatService
 import com.github.kabdelrahman.transtat.service.transaction.TransactionService
 import com.github.swagger.akka.SwaggerHttpService
 import com.github.swagger.akka.model.Info
 import io.swagger.models.auth.BasicAuthDefinition
 
 object SwaggerDocumentationService extends SwaggerHttpService with AppConfig {
-  override val apiClasses = Set(classOf[TransactionService])
+  override val apiClasses = Set(classOf[TransactionService], classOf[StatService])
   override val host = s"$httpHost:$httpPort"
   override val info = Info(
     title = "TranStat",

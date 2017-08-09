@@ -20,6 +20,7 @@ To package the project into a jar you can run `sbt assembly` and it will run all
 # API
 
 You can access swagger API documentation through this endpoint `http://localhost:1234/api-docs/swagger.json` (_you need to run the project first_)
+Feel free to copy and paste the output json to [http://editor.swagger.io/](http://editor.swagger.io/#/)
 
 ----
 
