@@ -18,7 +18,7 @@ class TransactionInMemoryCache extends Cache[Transaction] {
     resetStats()
   }
 
-  override def put(trx: Transaction): Unit = {
+  override protected[persistence] def put(trx: Transaction): Unit = {
     putInMapAndCalculateStats(trx, data)
   }
 
@@ -50,13 +50,12 @@ class TransactionInMemoryCache extends Cache[Transaction] {
     }
   }
 
-  override def wipeHistoryAndCalculateStatsBefore(time: Long): Unit = {
+  protected[persistence] override def wipeHistoryAndCalculateStatsBefore(time: Long): Unit = {
     resetStats()
     // TODO parallelize the caching and statistics calculation
-    data.dropWhile(trx => time > trx._1).foreach(_._2.foreach(putInMapAndCalculateStats(_, dataTransit)))
+    data.filterNot(_._1 < time).foreach(_._2.foreach(putInMapAndCalculateStats(_, dataTransit)))
     data = dataTransit.clone()
     dataTransit.clear()
-
   }
 
   override def resetStats(): Unit = {
