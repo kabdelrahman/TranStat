@@ -2,7 +2,7 @@ package com.github.kabdelrahman.transtat.service.stats
 
 import javax.ws.rs.Path
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.server.{Directives, Route}
 import akka.pattern._
 import akka.util.Timeout
@@ -10,8 +10,8 @@ import com.github.kabdelrahman.transtat.bootstrap.AppConfig
 import com.github.kabdelrahman.transtat.codecs.DefaultJsonFormats
 import com.github.kabdelrahman.transtat.metrics.Metrics
 import com.github.kabdelrahman.transtat.metrics.TimerSupport._
-import com.github.kabdelrahman.transtat.model.{Stats, Transaction}
-import com.github.kabdelrahman.transtat.service.Cache
+import com.github.kabdelrahman.transtat.model.Stats
+import com.github.kabdelrahman.transtat.persistence.GetStats
 import io.swagger.annotations.{Api, ApiOperation, ApiResponse, ApiResponses}
 import spray.json.RootJsonFormat
 
@@ -28,7 +28,7 @@ import scala.concurrent.duration._
 class StatService()(implicit executionContext: ExecutionContext,
                     implicit val metrics: Metrics,
                     implicit val system: ActorSystem,
-                    implicit val cache: Cache[Transaction]
+                    implicit val cacheController: ActorRef
 )
   extends Directives with DefaultJsonFormats with AppConfig {
 
@@ -51,7 +51,7 @@ class StatService()(implicit executionContext: ExecutionContext,
       get {
         timeit(metrics.statsMetrics) {
           complete {
-            (system.actorOf(StatsActor(cache)) ? GetStats()).mapTo[Stats]
+            (cacheController ? GetStats()).mapTo[Stats]
           }
         }
       }

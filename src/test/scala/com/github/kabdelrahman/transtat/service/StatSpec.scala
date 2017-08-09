@@ -1,17 +1,15 @@
 package com.github.kabdelrahman.transtat.service
 
 import akka.http.scaladsl.model._
-import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.util.ByteString
 import com.github.kabdelrahman.transtat.Spec
 import com.github.kabdelrahman.transtat.model.Stats
-import org.scalatest.{Matchers, WordSpec}
 
-
-class StatSpec extends WordSpec with Matchers with ScalatestRouteTest with Spec {
+class StatSpec extends Spec {
 
   "Stats Endpoint" should {
     "Empty values if no transactions" in {
+      resetCache()
       val request = HttpRequest(
         HttpMethods.GET,
         uri = "/statistics")
@@ -21,6 +19,7 @@ class StatSpec extends WordSpec with Matchers with ScalatestRouteTest with Spec 
       }
     }
     "Return values of one transaction if only one is posted" in {
+      resetCache()
       val now = System.currentTimeMillis()
       val jsonRequest = ByteString(
         s"""
@@ -48,6 +47,7 @@ class StatSpec extends WordSpec with Matchers with ScalatestRouteTest with Spec 
     }
 
     "Return correct statistics for all transactions" in {
+      resetCache()
       val now = System.currentTimeMillis()
       var jsonRequest = ByteString(
         s"""

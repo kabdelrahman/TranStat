@@ -2,7 +2,7 @@ package com.github.kabdelrahman.transtat.service.transaction
 
 import javax.ws.rs.Path
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.{Directives, Route}
 import akka.pattern._
@@ -12,7 +12,6 @@ import com.github.kabdelrahman.transtat.codecs.DefaultJsonFormats
 import com.github.kabdelrahman.transtat.metrics.Metrics
 import com.github.kabdelrahman.transtat.metrics.TimerSupport._
 import com.github.kabdelrahman.transtat.model.Transaction
-import com.github.kabdelrahman.transtat.service.Cache
 import io.swagger.annotations.{Api, ApiOperation, ApiResponse, ApiResponses}
 import spray.json.RootJsonFormat
 
@@ -29,7 +28,7 @@ import scala.concurrent.duration._
 class TransactionService()(implicit executionContext: ExecutionContext,
                            implicit val metrics: Metrics,
                            implicit val system: ActorSystem,
-                           implicit val cache: Cache[Transaction])
+                           implicit val cacheController: ActorRef)
   extends Directives with DefaultJsonFormats with AppConfig {
 
   // That's a very high timeout that should be monitored by metrics and reduced overtime.
@@ -55,7 +54,7 @@ class TransactionService()(implicit executionContext: ExecutionContext,
         entity(as[Transaction]) { transaction =>
           timeit(metrics.transactionMetrics) {
             complete {
-              (system.actorOf(TransactionActor(cache)) ? transaction).mapTo[TransactionOpResponse]
+              (system.actorOf(TransactionActor(cacheController)) ? transaction).mapTo[TransactionOpResponse]
                 .map(resp => if (resp.successful) {
                   StatusCodes.OK
                 } else {

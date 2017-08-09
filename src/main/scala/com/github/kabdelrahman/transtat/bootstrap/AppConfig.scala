@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import com.typesafe.config.{Config, ConfigFactory}
 
-import scala.concurrent.duration.{Duration, FiniteDuration}
+import scala.concurrent.duration.Duration
 
 trait AppConfig {
   val config: Config = ConfigFactory.load()

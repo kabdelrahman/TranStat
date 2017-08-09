@@ -1,7 +1,6 @@
 package com.github.kabdelrahman.transtat.api
 
-import akka.actor.{ActorRef, ActorSystem, Props}
-import com.github.kabdelrahman.transtat.service.transaction.TransactionActor
+import akka.actor.ActorSystem
 
 trait Core {
   implicit def system: ActorSystem

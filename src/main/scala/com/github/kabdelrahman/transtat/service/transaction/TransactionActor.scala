@@ -1,34 +1,36 @@
 package com.github.kabdelrahman.transtat.service.transaction
 
-import akka.actor.{Actor, ActorLogging, Props}
+import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 import akka.event.LoggingReceive
 import com.github.kabdelrahman.transtat.bootstrap.AppConfig
 import com.github.kabdelrahman.transtat.model.Transaction
-import com.github.kabdelrahman.transtat.service.Cache
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import com.github.kabdelrahman.transtat.persistence.CacheRequest
 
 case class TransactionOpResponse(successful: Boolean)
 
 
 object TransactionActor {
-  def apply(cache: Cache[Transaction]): Props = Props(new TransactionActor(cache))
+  def apply(cacheController: ActorRef): Props = Props(new TransactionActor(cacheController))
 }
 
-class TransactionActor(cache: Cache[Transaction]) extends Actor with ActorLogging with AppConfig {
+class TransactionActor(cacheController: ActorRef) extends Actor with ActorLogging with AppConfig {
 
   def receive: Receive = LoggingReceive {
     case trx: Transaction =>
       val originalSender = sender()
       val now = System.currentTimeMillis()
-      val delta = now - trx.timestamp
-      if (delta <= ttl.toMillis) {
-        cache.put(trx).map(originalSender ! TransactionOpResponse(_))
-      }
-      else {
+      if (trx.timestamp > now) {
         originalSender ! TransactionOpResponse(false)
+      } else {
+        val delta = now - trx.timestamp
+        if (delta <= ttl.toMillis) {
+          cacheController ! CacheRequest(trx)
+          originalSender ! TransactionOpResponse(true)
+        }
+        else {
+          originalSender ! TransactionOpResponse(false)
+        }
       }
-
       context.stop(self)
   }
 }

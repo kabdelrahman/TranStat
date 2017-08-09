@@ -1,11 +1,9 @@
 package com.github.kabdelrahman.transtat.swagger
 
 import akka.http.scaladsl.model.{HttpMethods, HttpRequest}
-import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.github.kabdelrahman.transtat.Spec
-import org.scalatest.{Matchers, WordSpec}
 
-class SwaggerSpec extends WordSpec with Matchers with ScalatestRouteTest with Spec {
+class SwaggerSpec extends Spec {
 
   "Swagger Endpoint" should {
     "returns valid API documentation" in {
