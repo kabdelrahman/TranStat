@@ -2,6 +2,7 @@ package com.github.kabdelrahman.transtat.persistence
 
 import akka.actor.{Actor, ActorLogging, Props}
 import akka.event.LoggingReceive
+import com.github.kabdelrahman.transtat.bootstrap.AppConfig
 import com.github.kabdelrahman.transtat.model.{Stats, Transaction}
 
 case class CacheRequest(trx: Transaction)
@@ -19,7 +20,7 @@ object CacheController {
   def apply(): Props = Props[CacheController]
 }
 
-class CacheController extends Actor with ActorLogging {
+class CacheController extends Actor with ActorLogging with AppConfig {
   private val cache = new TransactionInMemoryCache
   private var tickWheelTime = 0L
 

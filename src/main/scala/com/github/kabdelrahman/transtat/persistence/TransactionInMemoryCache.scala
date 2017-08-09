@@ -7,6 +7,10 @@ import scala.collection.concurrent.TrieMap
 
 class TransactionInMemoryCache extends Cache[Transaction] with AppConfig {
 
+  // Initialize expected cache size
+  data.sizeHint(cacheTtl.toMillis.toInt)
+  dataTransit.sizeHint(cacheTtl.toMillis.toInt)
+
   // ONLY FOR TESTING PURPOSES
   def resetCache(): Unit = {
     data.clear()

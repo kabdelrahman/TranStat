@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import com.typesafe.config.{Config, ConfigFactory}
 
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration.{Duration, FiniteDuration}
 
 trait AppConfig {
   val config: Config = ConfigFactory.load()
@@ -12,7 +12,8 @@ trait AppConfig {
   val httpPort: Int = config.getInt("http.port")
   val version: String = config.getString("version")
 
-  val ttl: Duration = duration("cache.ttl")
+  val cacheTtl: FiniteDuration = duration("persistence.in-memory.cache.ttl")
+  val cacheTick: FiniteDuration = duration("persistence.in-memory.cache.tick")
 
   private def duration(part: String) =
     Duration.create(config.getDuration(part).toMillis, TimeUnit.MILLISECONDS)

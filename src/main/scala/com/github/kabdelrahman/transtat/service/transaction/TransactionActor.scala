@@ -23,7 +23,8 @@ class TransactionActor(cacheController: ActorRef) extends Actor with ActorLoggin
         originalSender ! TransactionOpResponse(false)
       } else {
         val delta = now - trx.timestamp
-        if (delta <= ttl.toMillis) {
+        // TODO move `cacheTtl` to be passed to the Actor itself with the cacheController Info.
+        if (delta <= cacheTtl.toMillis) {
           cacheController ! CacheRequest(trx)
           originalSender ! TransactionOpResponse(true)
         }

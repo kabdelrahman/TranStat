@@ -1,5 +1,7 @@
 package com.github.kabdelrahman.transtat.persistence
 
+import com.github.kabdelrahman.transtat.bootstrap.AppConfig
+
 import scala.collection.concurrent.TrieMap
 
 
@@ -22,8 +24,6 @@ trait Cache[T] {
   // The purpose of having a TrieMap is to have a maximum of (default 60000 entries represent 60 seconds in milliseconds)
   protected var data: TrieMap[Long, Vector[T]] = TrieMap.empty[Long, Vector[T]]
   protected var dataTransit: TrieMap[Long, Vector[T]] = TrieMap.empty[Long, Vector[T]]
-  data.sizeHint(60000)
-  dataTransit.sizeHint(60000)
 }
 
 

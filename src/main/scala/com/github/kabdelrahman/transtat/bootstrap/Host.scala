@@ -10,6 +10,4 @@ trait Host {
   implicit val mat = ActorMaterializer()
   Http().bindAndHandle(routes, httpHost, httpPort)
   logger.info(s"application started on $httpHost:$httpPort")
-  val currentTime = System.currentTimeMillis()
-  println(currentTime)
 }

@@ -7,7 +7,7 @@ import io.github.lhotari.akka.http.health.HealthEndpoint
 object Main
   extends App
     with LazyLogging
-    with HealthEndpoint
+    with HealthEndpoint // TODO enable Metrics for HealthCheck
     with AppConfig
     with CoreActorSystem
     with Api
