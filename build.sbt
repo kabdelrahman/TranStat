@@ -47,3 +47,5 @@ libraryDependencies += "io.github.lhotari" %% "akka-http-health" % "1.0.8"
 // Swagger Documentation
 libraryDependencies += "com.github.swagger-akka-http" %% "swagger-akka-http" % "0.10.0"
 
+coverageEnabled := true
+
