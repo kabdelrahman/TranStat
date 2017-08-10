@@ -105,5 +105,96 @@ class StatSpec extends Spec {
         responseAs[Stats] shouldEqual Stats(600, 200, 300, 100, 3)
       }
     }
+    "Return correct statistics for all transactions with proper min/max values" in {
+      resetCache()
+      val now = System.currentTimeMillis()
+      var jsonRequest = ByteString(
+        s"""
+           |{
+           |    "amount":100,
+           |    "timestamp": $now
+           |}
+        """.stripMargin)
+
+      var request = HttpRequest(
+        HttpMethods.POST,
+        uri = "/transactions",
+        entity = HttpEntity(MediaTypes.`application/json`, jsonRequest))
+      request ~> routes ~> check {
+        response.status shouldEqual StatusCodes.OK
+      }
+
+      jsonRequest = ByteString(
+        s"""
+           |{
+           |    "amount":200,
+           |    "timestamp": $now
+           |}
+        """.stripMargin)
+
+      request = HttpRequest(
+        HttpMethods.POST,
+        uri = "/transactions",
+        entity = HttpEntity(MediaTypes.`application/json`, jsonRequest))
+      request ~> routes ~> check {
+        response.status shouldEqual StatusCodes.OK
+      }
+
+      jsonRequest = ByteString(
+        s"""
+           |{
+           |    "amount":300,
+           |    "timestamp": $now
+           |}
+        """.stripMargin)
+
+      request = HttpRequest(
+        HttpMethods.POST,
+        uri = "/transactions",
+        entity = HttpEntity(MediaTypes.`application/json`, jsonRequest))
+      request ~> routes ~> check {
+        response.status shouldEqual StatusCodes.OK
+      }
+
+      jsonRequest = ByteString(
+        s"""
+           |{
+           |    "amount":50,
+           |    "timestamp": $now
+           |}
+        """.stripMargin)
+
+      request = HttpRequest(
+        HttpMethods.POST,
+        uri = "/transactions",
+        entity = HttpEntity(MediaTypes.`application/json`, jsonRequest))
+      request ~> routes ~> check {
+        response.status shouldEqual StatusCodes.OK
+      }
+
+      jsonRequest = ByteString(
+        s"""
+           |{
+           |    "amount":500,
+           |    "timestamp": $now
+           |}
+        """.stripMargin)
+
+      request = HttpRequest(
+        HttpMethods.POST,
+        uri = "/transactions",
+        entity = HttpEntity(MediaTypes.`application/json`, jsonRequest))
+      request ~> routes ~> check {
+        response.status shouldEqual StatusCodes.OK
+      }
+
+      request = HttpRequest(
+        HttpMethods.GET,
+        uri = "/statistics")
+      request ~> routes ~> check {
+        response.status shouldEqual StatusCodes.OK
+        responseAs[Stats] shouldEqual Stats(1150, 230, 500, 50, 5)
+      }
+    }
   }
 }
