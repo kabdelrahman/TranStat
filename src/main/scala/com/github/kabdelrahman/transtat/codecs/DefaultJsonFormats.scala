@@ -21,7 +21,7 @@ trait DefaultJsonFormats extends DefaultJsonProtocol with SprayJsonSupport {
     override def write(transaction: Transaction): JsValue = {
       JsObject(
         "amount" -> JsNumber(transaction.amount),
-        "timestmap" -> JsNumber(transaction.timestamp)
+        "timestamp" -> JsNumber(transaction.timestamp)
       )
     }
   }
